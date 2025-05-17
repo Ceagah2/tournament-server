@@ -86,6 +86,17 @@ app.get("/available-count", async (_req: Request, res: Response) => {
   res.json({ availableCount });
 });
 
+
+app.post("/admin/login", (req: Request, res: Response) => {
+  const { password } = req.body;
+
+  if (password === process.env.ADMIN_PASSWORD) {
+    return res.json({ token: "admin-token" }); 
+  }
+
+  return res.status(401).json({ error: "Unauthorized" });
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`✅ Server is running on http://localhost:${PORT}`);
